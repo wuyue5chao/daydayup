@@ -1,0 +1,179 @@
+@charset "utf-8";
+.item{
+    display: -webkit-flex;
+    /*display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;*/
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -o-flex-wrap: wrap;
+}
+
+.item{
+    @each $browser in -webkit-,-moz-,-ms-,-o-{
+        display: #{$browser}flex;
+        #{$browser}flex-wrap:wrap;
+    }
+}
+
+
+/*@each $var in*/ 
+@each $animal in puma,sea-slug,egret,salamander{
+    .#{$animal}-icon{
+        background-image: url('images/#{$animal}.png');
+    }
+}
+
+/*
+@for $var from through
+@for $var from to
+*/
+
+@for $i from 1 through 3{
+    .item-#{$i}{
+        width: 2em * $i;
+    }
+}
+
+/*px转rem*/
+$browser-default-font-size:16px !default;
+@function pxTorem($px){
+    @return $px / $browser-default-font-size * 1rem;
+}
+@mixin font-size($target){
+    font-size: $target;
+    font-size: ($target / $browser-default-font-size) * 1rem;
+}
+
+/*去掉单位*/
+@function strip-units($number){
+    @return $number / ($number * 0 + 1);
+}
+@mixin remCalc($property, $values...){
+    $max: length($values);
+    $pxValues: '';
+    $remValues: '';
+
+    @for $i from 1 through $max{
+        $value: strip-units(nth($values, $i));
+        $browser-default-font-size: strip-units($browser-default-font-size);
+        $pxValues: #{$pxValues + $value * $browser-default-font-size}px;
+
+        @if $i < $max{
+            $pxValues: #{$pxValues + " "};
+        }
+    }
+
+    @for $i from 1 through $max{
+        $value: strip-units(nth($values, $i));
+        $remValues: #{$remValues + $value}rem;
+
+        @if $i < $max{
+            $remValues: #{$remValues + " "};
+        }
+    }
+
+    #{$property}: $pxValues;
+    #{$property}: $remValues;
+}
+
+.wrapper{
+    @include remCalc(width,45);
+    @include remCalc(margin,1,.5,2,3);
+}
+
+$legacy-support-for-ie:true !default; //是否兼容ie6、7 全局变量
+@mixin inline-block{
+    display: inline-block;
+    @if $legacy-support-for-ie{
+        *display: inline; *zoom: 1;
+    }
+}
+
+//$legacy-support-for-ie: false;
+.inline-block{
+    @include inline-block;
+}
+
+
+//用border生成三角形
+@mixin triangle($borderColor, $direction: top, $size: 10px){  //设置默认值，未设置的参数放在前面
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+
+    @if $direction == top {
+        border-bottom: $size solid $borderColor;
+        border-left: $size dashed transparent;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction == right {
+        border-left: $size solid $borderColor;
+        border-top: $size dashed transparent;
+        border-bottom: $size dashed transparent;
+    }
+    @else if $direction == bottom {
+        border-top: $size solid $borderColor;
+        border-left: $size dashed transparent;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction == left {
+        border-right: $size solid $borderColor;
+        border-top: $size dashed transparent;
+        border-bottom: $size dashed transparent;
+    }
+    @else if $direction == 1 {  //直角三角形 左上
+        border-top: $size solid $borderColor;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction == 2 {  //直角三角形 右上
+        border-top: $size solid $borderColor;
+        border-left: $size dashed transparent;
+    }
+    @else if $direction == 3 {  //直角三角形 左下
+        border-bottom: $size solid $borderColor;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction == 4 {  //直角三角形 右下
+        border-bottom: $size solid $borderColor;
+        border-left: $size dashed transparent;
+    }
+}
+
+.arrow-top{
+    @include triangle(#999);
+}
+.arrow-right{
+    @include  triangle(red, right, 5px);
+}
+.arrow-down{
+    @include triangle(green, 3, 10px)
+}
+
+//clearfix
+%clearfix{
+    @if $legacy-support-for-ie {
+        *zoom: 1;
+    }
+    &:before,
+    &:after {
+        content: '';
+        display: table;
+        font: 0/0 a;
+        visibility:hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.wrap{
+    @extend %clearfix;
+}
+
+//@mixin 通过@include调用 以拷贝形式存在 建议传递参数的用mixin
+//% 占位选择器 通过@extend调用 不调用不会产生多余的css 建议不传递参数的用@extend %class
+//@extend 继承
+//@function

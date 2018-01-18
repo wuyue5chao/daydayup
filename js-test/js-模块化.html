@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>javascript 模块化</title>
+    <script src="js-module.js"></script>
+</head>
+<body>
+	<script>
+		var Sum = new Object({
+			a : 1,
+			b : 2,
+			sum : function(){
+				console.log(this.a + this.b);
+			}
+		});
+		Sum.a = 4;
+		Sum.sum();
+		
+		var Add = (function(){
+			var a = 1;
+			var b = 2;
+			var sum = function(){
+				console.log(a+b);
+			};
+			var sub = function(){
+				console.log(a-b);
+			};
+			
+			return {
+				sum : sum,
+				sub : sub
+			}
+		})();
+		
+		console.log(Add.a); //undefind
+		Add.sum();
+		//第一个输出的Add.a是undefind，外部是无法获取我们模块内部参数的，但是由于方法我们返回成为一个对象，因此是可以由外部调用的。
+		/*Add = (function(){
+			var m3 = function(){
+				console.log('添加新方法');     //没有添加上 而是重置了对象
+			};
+			
+			return {m3 : m3}
+		})(Add);
+		
+		Add.m3();*/
+		
+		Add = (function(mod){
+			mod.m4 = function(){
+				console.log('添加另一个新方法');    //添加成功
+			};
+			
+			return mod;
+		})(window.Add || {});
+		
+		Add.m4();
+		
+		
+	</script>
+</body>
+</html>

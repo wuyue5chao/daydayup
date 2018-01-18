@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<title></title>
+</head>
+<body>
+	<script>
+		if(navigator.onLine){
+			//正常工作
+		}else{
+			//执行离线状态时任务
+		}
+		EventUtil.addEventListener("window","online",function(){
+			alert("online");
+		})
+		EventUtil.addEventListener("window","offline",function(){
+			alert("offline");
+		})
+	</script>
+</body>
+</html>

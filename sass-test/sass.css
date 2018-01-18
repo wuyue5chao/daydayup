@@ -1,0 +1,97 @@
+@charset "UTF-8";
+.item {
+  display: -webkit-flex;
+  /*display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;*/
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -o-flex-wrap: wrap; }
+
+.item {
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  display: -moz-flex;
+  -moz-flex-wrap: wrap;
+  display: -ms-flex;
+  -ms-flex-wrap: wrap;
+  display: -o-flex;
+  -o-flex-wrap: wrap; }
+
+/*@each $var in*/
+.puma-icon {
+  background-image: url("images/puma.png"); }
+
+.sea-slug-icon {
+  background-image: url("images/sea-slug.png"); }
+
+.egret-icon {
+  background-image: url("images/egret.png"); }
+
+.salamander-icon {
+  background-image: url("images/salamander.png"); }
+
+/*
+@for $var from through
+@for $var from to
+*/
+.item-1 {
+  width: 2em; }
+
+.item-2 {
+  width: 4em; }
+
+.item-3 {
+  width: 6em; }
+
+/*px转rem*/
+/*去掉单位*/
+.wrapper {
+  width: 720px;
+  width: 45rem;
+  margin: 16px 8px 32px 48px;
+  margin: 1rem 0.5rem 2rem 3rem; }
+
+.inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1; }
+
+.arrow-top {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid #999;
+  border-left: 10px dashed transparent;
+  border-right: 10px dashed transparent; }
+
+.arrow-right {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid red;
+  border-top: 5px dashed transparent;
+  border-bottom: 5px dashed transparent; }
+
+.arrow-down {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid green;
+  border-right: 10px dashed transparent; }
+
+.wrap {
+  *zoom: 1; }
+  .wrap:before, .wrap:after {
+    content: '';
+    display: table;
+    font: 0/0 a;
+    visibility: hidden; }
+  .wrap:after {
+    clear: both; }
+
+/*# sourceMappingURL=sass.css.map */

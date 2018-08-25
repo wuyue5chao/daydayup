@@ -1,0 +1,102 @@
+<head>
+</head>
+
+<script type='text/javascript'>
+/*
+function Foo (y) {this.y = y;}
+
+Foo.prototype.x = 10;
+
+Foo.prototype.calculate = function (z) {return this.x + this.y + z;};
+
+var b = new Foo(20);
+var c = new Foo(20);
+
+b.calculate(30); // 60
+*/
+
+//var n = 0;
+//window.__myInterval = setInterval(function () {
+//    console.log(window.__myInterval, n);
+//    if (n > 9) clearInterval(window.__myInterval);
+//    n++;
+//}, 1000);
+
+//
+
+/**
+ * 从 n 个数组任意选取一个元素的所有组合
+ *
+ * @param arr 输入的数组
+ * @return {Array}
+ */
+function exchange(arr) {
+    var results = [];
+    var result = [];
+
+    /**
+     * 变换函数
+     * @param arr 输入的数组
+     * @param depth 深度，从 0 开始
+     */
+    function doExchange(arr, depth) {
+        for (var i = 0; i < arr[depth].length; i++) {
+            result[depth] = arr[depth][i];
+            if (depth !== arr.length - 1)
+                doExchange(arr, depth + 1);
+            else
+                results.push(result.slice());
+        }
+    }
+
+    doExchange(arr, 0);
+
+    return results;
+}
+
+/**
+ * 数组元素去除重复
+ *
+ * @param {Array} array 输入的数组
+ * @return {Array}
+ */
+function unique(array) {
+    var result = [];
+    for (var i = 0; i < array.length; i++)
+        if (result.indexOf(array[i]) === -1)
+            result.push(array[i]);
+    return result;
+}
+
+//var a = [
+//    ['1', '2', '3'],
+//    ['1', '2', '3', '4'],
+//    ['1', '2', '3', '4', '5']
+//];
+
+var a = [
+    ['1', '2', '3'],
+    ['1', '2'],
+    ['1']
+];
+var a = [
+    ['1'],
+    ['1'],
+    ['1']
+];
+
+// 所有组合
+var allC = exchange(a);
+console.log(allC)
+
+
+// 去掉不合要求的
+var result = [];
+allC.forEach(function (v) {
+    if (unique(v).length === 3)
+        result.push(v);
+});
+
+console.log(result);
+
+</script>
